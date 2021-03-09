@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -12,9 +13,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if(!$request->isMethod('get')) return 'Invalid method';
+
+        return User::all();
     }
 
     /**
@@ -25,7 +28,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!$request->isMethod('post')) return 'Invalid method.';
+
+        if($request->missing('name')) return 'Missing name.';
+
+        $created = User::create($request->all());
+
+        if(!$created) return 'Couldn\'t create user. Contact support.';
+
+        return 'User created.';
     }
 
     /**
@@ -34,9 +45,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        if(!$request->isMethod('get')) return 'Invalid method.';
+
+        if(!$id) return 'Missing id.';
+
+        $user = User::find($id);
+
+        if(!$user) return 'User not found.';
+
+        return $user;
     }
 
     /**
@@ -48,7 +67,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(!$request->isMethod('put')) return 'Invalid method.';
+
+        if($request->missing('name')) return 'Nothing to update.';
+
+        $user = User::find($id);
+
+        if(!$user) return 'User not found.';
+
+        $updated = $user->update($request->all());
+
+        if(!$updated) return 'Couldn\'t update user. Contact support.';
+
+        return 'User updated.';
     }
 
     /**
@@ -57,8 +88,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if(!$request->isMethod('delete')) return 'Invalid method.';
+
+        $user = User::find($id);
+
+        if(!$user) return 'User not found.';
+
+        $deleted = $user->delete();
+
+        if(!$deleted) return 'Couldn\'t delete user. Contact support.';
+
+        return 'User deleted.';
     }
 }
