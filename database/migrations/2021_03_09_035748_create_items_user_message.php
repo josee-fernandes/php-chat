@@ -15,7 +15,13 @@ class CreateItemsUserMessage extends Migration
     {
         Schema::create('items_user_message', function (Blueprint $table) {
             $table->id();
+            $table->enum('receiving', ['yes', 'no']);
+            $table->foreignId('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('message_id');
+            $table->foreign('message_id')->references('id')->on('messages')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

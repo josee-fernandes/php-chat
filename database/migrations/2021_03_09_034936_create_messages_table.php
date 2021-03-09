@@ -15,7 +15,10 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->longText('message');
+            $table->timestamp('date')->useCurrent();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

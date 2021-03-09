@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->integer('messages_sent')->default('0');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
