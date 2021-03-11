@@ -1,57 +1,270 @@
+@use url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;400;600;700;900&display=swap')
+
+
 \:root
-   --clr-light : #efefef
-   --clr-light-shade : #e1e1e1
-   --clr-dark : #1f1f1f
-   --clr-dark-shade : #1b1b1b
-   --clr-bg-body : var(--clr-light)
-   --grid-rows-chat : 7
+   --clr-primary: #863ae9
+   --clr-primary-shade: #6930b4
+   --clr-primary-tint: #9658e7
+   --clr-light: #efefef
+   --clr-light-shade: #e1e1e1
+   --clr-light-tint: #f8f8f8
+   --clr-dark: #1b1b1b
+   --clr-dark-shade: #161616
+   --clr-dark-tint: #222222
+   --clr-bg-body: var(--clr-light-shade)
+   --font-sz-title: 1.8rem
+   --font-sz-subtitle: 1.6rem
+   --font-sz-p: 1rem
+   --font-wgt-title: 900
+   --font-wgt-subtitle: 700
+   --font-wgt-p: 400
+   --grid-columns-chat-input: 7
+   --grid-rows-chat: 7
+
 
 @mixin flex-center
-   display : flex
-   flex-direction : column
-   justify-content : center
-   align-items : center
+   display: flex
+   flex-direction: column
+   justify-content: center
+   align-items: center
+
+
+@mixin h1
+   font-size: var(--font-sz-title)
+   font-weight: var(--font-wgt-title)
+
+
+@mixin h2
+   font-size: var(--font-sz-subtitle)
+   font-weight: var(--font-wgt-subtitle)
+
+
+@mixin p
+   font-size: var(--font-sz-p)
+   font-weight: var(--font-wgt-p)
+
 
 *
-   margin : 0
-   padding : 0
-   box-sizing : border-box
+   margin: 0
+   padding: 0
+   box-sizing: border-box
+   font-family: 'Source Sans Pro', sans-serif
+
 
 html, body
    width: 100wv
    height: 100vh
 
+
 body
    @include flex-center
-   overflow-x : hidden
-   background-color : var(--clr-bg-body)
+   overflow-x: hidden
+   background-color: var(--clr-bg-body)
+
+
+h1
+   @include h1
+
+
+h2
+   @include h2
+
+
+p
+   @include p
 
 
 .container
    @include flex-center
-   max-width : 1100px
-   width: 80%
+   max-width: 1100px
+   width: 100%
+
 
 .chat
-   display : grid
-   max-width : 900px
-   width : 100%
-   height : 100vh
-   grid-template-rows : repeat(var(--grid-rows-chat) ,1fr)
-   grid-template-areas : 'info' 'messages' 'messages' 'messages' 'messages' 'input'
+   display: grid
+   max-width: 900px
+   width: 100%
+   height: 100vh
+   grid-template-rows: repeat(var(--grid-rows-chat), 1fr)
+   grid-template-areas: 'info' 'messages' 'messages' 'messages' 'messages' 'input'
 
    &__info
-      grid-row : 1
-      background-color : green
+      grid-row: 1
+      background-color: var(--clr-light)
+      display: flex
+      align-items: center
+      gap: 2rem
+
+      &--avatar
+         display: block
+         padding: .5rem
+         width: 64px
+         height: 64px
+         border-radius: 50%
+         background-color: var(--clr-light-shade)
+         margin-left: 2rem
 
    &__messages
-      grid-row : 2 / span 5
-      background-color : red
+      grid-row: 2 / span 5
+      background-color: var(--clr-light-tint)
+      display: flex
+      flex-direction: column-reverse
+
+      .message
+         margin: 1rem
+         padding: 1rem
+         background-color: var(--clr-primary)
+         position: relative
+         width: 40%
+         max-width: 300px 
+
+         &__timestamp
+            color: var(--clr-light-shade)
+            font: 
+               size: .8rem
+               weight: 200
+
+         &__author
+            margin-top: 1rem
+            color: var(--clr-light)
+            font-weight: 200
+
+         &__content
+            margin-top: .5rem
+            color: var(--clr-light-tint)
+            font-weight: 600
+            word-wrap: break-word
+            max-height: 200px
+            overflow-y: auto
+
+      .message-sending
+         align-self: flex-end
+         border:
+            top-left-radius: 10px
+            top-right-radius: 10px
+            bottom-left-radius: 10px
+
+         &::after
+           content: '' 
+           display: block
+           width: 0
+           height: 0
+           background-color: transparent
+           border:
+              left: 5px solid var(--clr-primary)
+              right: 5px solid transparent
+              bottom: 5px solid var(--clr-primary)
+              top: 5px solid transparent
+           position: absolute
+           right: -10px
+           bottom: 0
+
+      .message-receiving
+         align-self: flex-start
+         border:
+            top-left-radius: 10px
+            top-right-radius: 10px
+            bottom-right-radius: 10px
+
+         &::before
+           content: '' 
+           display: block
+           width: 0
+           height: 0
+           background-color: transparent
+           border:
+              left: 5px solid transparent
+              right: 5px solid var(--clr-primary)
+              bottom: 5px solid var(--clr-primary)
+              top: 5px solid transparent
+           position: absolute
+           left: -10px
+           bottom: 0
 
    &__input
-      grid-row : 7
-      background-color : blue
+      grid-row: 7
+      background-color: var(--clr-light)
+      display: grid
+      grid-template-columns: repeat(var(--grid-columns-chat-input), 1fr)
+      place-items: center
 
-@media (prefers-color-scheme : dark)
+      &--field
+         @include p
+         grid-column: 1 / span 6
+         border: none
+         padding: 1rem
+         width: 90%
+         background-color: var(--clr-light-tint)
+         border-radius: 100px
+         border: 1px solid var(--clr-primary)
+
+         &:focus
+            outline: none
+
+      &--button
+         grid-column: 7
+         border: none
+         width: 42px
+         height: 42px
+         background-color: var(--clr-primary)
+         color: var(--clr-light-tint)
+         border-radius: 50%
+         cursor: pointer
+         transition: all .2s ease
+
+         &:hover
+            transform: scale(1.2)
+
+
+@media screen and (min-width: 768px)
    \:root
-      --clr-bg-body : var(--clr-dark)
+      --font-sz-title: 2rem
+      --font-sz-subtitle: 1.8rem
+      --font-sz-p: 1.1rem
+
+   .container
+      width: 80%
+
+   .chat
+      &__messages
+         .message
+            &__timestamp
+               font-size: .9rem
+
+
+@media screen and (min-width: 1024px)
+   \:root
+      --font-sz-title: 2.2rem
+      --font-sz-subtitle: 2rem
+      --font-sz-p: 1.2rem
+
+   .chat
+      &__messages
+         .message
+            &__timestamp
+               font-size: 1rem
+
+
+@media (prefers-color-scheme: dark)
+   \:root
+      --clr-bg-body: var(--clr-dark-shade)
+
+   *
+      color: var(--clr-light)
+
+   .chat
+      &__info
+         background-color: var(--clr-dark)
+
+         &--avatar
+            filter: invert(100%) brightness(80%)
+
+      &__messages
+         background-color: var(--clr-dark-tint)
+
+      &__input
+         background-color: var(--clr-dark)
+
+         &--field
+            background-color: var(--clr-dark-shade)
+

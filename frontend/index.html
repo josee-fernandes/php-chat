@@ -15,21 +15,32 @@
    <div class="container">
       <section class="chat">
          <header class="chat__info">
-            <img src="assets/img/avatar.jpg" alt="Avatar">
-            <h1>Name</h1>
+            <div class="chat__info--avatar">
+               <img src="assets/img/icons/avatar.svg" alt="Avatar">
+            </div>
+            <h1 class="chat__info--name">Layane</h1>
          </header>
          <main class="chat__messages">
-            <div class="message">
-               <p class="message_timestamp">2021-03-11 12:00</p>
-               <p class="message_content">This is a message</p>
+            <div class="message message-receiving">
+               <p class="message__timestamp">2021-03-11 12:07</p>
+               <p class="message__author">Layane</p>
+               <p class="message__content">Lorem ipsum, dolor sit amet consectetur adipisicing.</p>
+            </div>
+            <div class="message message-sending">
+               <p class="message__timestamp">2021-03-11 12:02</p>
+               <p class="message__author">José</p>
+               <p class="message__content">Lorem, ipsum dolor.</p>
+            </div>
+            <div class="message message-receiving">
+               <p class="message__timestamp">2021-03-11 12:00</p>
+               <p class="message__author">Layane</p>
+               <p class="message__content">Lorem ipsum dolor sit.</p>
             </div>
          </main>
-         <div class="chat__input">
-            <form action="" method="">
-               <input type="text" id="message" name="message" placeholder="">
-               <input type="submit" value="Enviar">
-            </form>
-         </div>
+         <form autocomplete="off" class="chat__input">
+            <input class="chat__input--field" type="text" id="message" name="message" placeholder="Type a message..." value="">
+            <input class="chat__input--button" type="submit" value="►">
+         </form>
       </section>
    </div>
 </body>
