@@ -13,7 +13,7 @@ class CreateItemsUserMessage extends Migration
      */
     public function up()
     {
-        Schema::create('items_user_message', function (Blueprint $table) {
+        Schema::create('items_user_messages', function (Blueprint $table) {
             $table->id();
             $table->enum('receiving', ['yes', 'no']);
             $table->foreignId('user_id');
@@ -32,6 +32,6 @@ class CreateItemsUserMessage extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items_user_message');
+        Schema::dropIfExists('items_user_messages');
     }
 }

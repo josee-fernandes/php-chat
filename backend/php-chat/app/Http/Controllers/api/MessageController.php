@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\ItemsUserMessage;
 use App\Models\Message;
 use Illuminate\Http\Request;
 
@@ -32,9 +33,21 @@ class MessageController extends Controller
 
         if($request->missing('message')) return 'Missing message.';
 
-        $created = Message::create($request->all());
+        if($request->missing('sending_id')) return 'Missing sending_id.';
+        
+        if($request->missing('receiving_id')) return 'Missing receiving_id.';
 
-        if(!$created) return 'Couldn\'t create message. Contact support.';
+        $messageCreated = Message::create(['message' => $request->message]);
+
+        if(!$messageCreated) return 'Couldn\'t create message. Contact support.';
+
+        $sendingCreated = ItemsUserMessage::create(['receiving' => 'no', 'user_id' => $request->sending_id, 'message_id' => $messageCreated->id]);
+
+        if(!$sendingCreated) return 'Couldn\'t create sending item. Contact support.';
+        
+        $receivingCreated = ItemsUserMessage::create(['receiving' => 'yes', 'user_id' => $request->receiving_id, 'message_id' => $messageCreated->id]);
+        
+        if(!$receivingCreated) return 'Couldn\'t create receiving item. Contact support.';
 
         return 'Message created.';
     }

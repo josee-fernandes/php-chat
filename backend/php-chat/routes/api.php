@@ -21,3 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResource('users', 'api\UserController');
 
 Route::apiResource('messages', 'api\MessageController');
+
+Route::apiResource('user-message', 'api\ItemUserMessageController');
